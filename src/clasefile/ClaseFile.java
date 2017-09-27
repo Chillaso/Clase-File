@@ -10,47 +10,25 @@ public class ClaseFile {
     {	
 	try
 	{
-	    ComprobarDirectorio(args[0]);
+	    File archivo = new File(args[0]);
+	    ComprobarArbol(archivo);
 	}
 	catch(ArrayIndexOutOfBoundsException e)
 	{	    
 	    System.out.println("Error, no se han pasado suficientes argumentos");
 	}
-    }
-       
-    public static void ComprobarDirectorio (String ruta)
-    {
-	File archivo = new File(ruta);
-	InformacionArchivo(archivo);
-	
-	//Si la ruta es un directorio cojo todos sus hijos
-	if (archivo.isDirectory())
+	catch(NullPointerException e)
 	{
-	    File [] lista = archivo.listFiles();
-	    //Por cada hijo compruebo si es directorio o no
-	    for (File a : lista)
-	    {
-		ComprobarArbol(a);
-	    }
+	    System.out.println("Error, la ruta especificada no es válida");
 	}
-    }
+    }       
     
-    //Este metodo se mete dentro de carpetas hasta que encuentra el archivo más profundo
     public static void ComprobarArbol (File archivo)
     {
-	//Compruebo si el archivo es un documento
-	if (archivo.isFile())
-	{
-	    InformacionArchivo(archivo);	   
-	}
-	//Si el archivo es un directorio accede a los documentos, imprime y comprueba de nuevo
-	else
-	{
-	    //Imprimo la info del directorio 
-	    InformacionArchivo(archivo);	    
-	    //Saco sus hijos
+	InformacionArchivo(archivo);
+	if (archivo.isDirectory())
+	{	    	  	    	    
 	    File [] listaDirectorio = archivo.listFiles();	    
-	    //Para cada hijo compruebo de nuevo que tiene dentro
 	    for (File a : listaDirectorio)
 	    {
 		ComprobarArbol(a);
